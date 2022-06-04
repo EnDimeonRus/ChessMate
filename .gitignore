@@ -1,0 +1,14 @@
+.vs/ChessMate/v16/.suo
+.vs/ChessMate/config/applicationhost.config
+.vs/ChessMate/DesignTimeBuild/.dtbcache.v2
+ChessMate.Application/bin/
+ChessMate.Application/obj/ChessMate.Application.csproj.nuget.dgspec.json
+ChessMate.Application/obj/
+ChessMate.Infrastructure/bin/
+ChessMate.Infrastructure/obj/
+ChessMate.Models/bin/
+ChessMate.Models/obj/
+ChessMate/bin/
+ChessMate/obj/
+ChessMate/ChessMate.API.csproj.user
+ChessMate/ChessMate.API.csproj

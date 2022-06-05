@@ -1,15 +1,13 @@
 ﻿using ChessMate.Infrastructure.Models;
+using System.Threading.Tasks;
 
 namespace ChessMate.Infrastructure.Repository
 {
     public interface IRepository<TEntity> where TEntity:BaseEntity
     {
-        TEntity Get(int id);
+        Task<TEntity> GetAsync(int id);
 
-        int Create(TEntity entity);
+        Task<int> CreateAsync(TEntity entity);
 
-        void Update(TEntity entity);
-
-        void Delete(int id);
     }
 }

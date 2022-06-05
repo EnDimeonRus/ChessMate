@@ -1,4 +1,5 @@
 using ChessMate.Infrastructure;
+using ChessMate.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,10 +33,7 @@ namespace ChessMate
 
             var connString = Configuration["ConnectionStrings:Main"];
 
-            services.AddDbContext<ChessMateDbContext>(options =>
-            {
-                options.UseSqlServer(connString);
-            });
+            services.InitializeDatabase(connString);
 
             services.AddControllers();
 
@@ -48,7 +46,7 @@ namespace ChessMate
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

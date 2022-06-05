@@ -1,6 +1,7 @@
-﻿using ChessMate.Infrastructure.Models;
+﻿using ChessMate.Infrastructure.Entities;
 using ChessMate.Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ChessMate.API.Controllers
@@ -9,21 +10,10 @@ namespace ChessMate.API.Controllers
     [ApiController]
     public class PositionsController : ControllerBase
     {
-        IRepository<ColorEntity> _colorRep;
-        public PositionsController(IRepository<ColorEntity> colorRep)
-        {
-            _colorRep = colorRep;
-        }
-
         // GET api/<PositionsController>/5
         [HttpGet("{id}")]
         public async Task<string> Get(int id)
         {
-            var color = await _colorRep.GetAsync(1);
-            await _colorRep.CreateAsync(new ColorEntity()
-            {
-                Description = "Серый"
-            });
             return "value";
         }
 

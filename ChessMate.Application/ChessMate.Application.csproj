@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChessMate.Infrastructure\ChessMate.Infrastructure.csproj" />
+    <ProjectReference Include="..\ChessMate.Models\ChessMate.Models.csproj" />
   </ItemGroup>
 
 </Project>

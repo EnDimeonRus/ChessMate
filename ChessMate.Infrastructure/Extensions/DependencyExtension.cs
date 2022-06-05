@@ -1,4 +1,4 @@
-﻿using ChessMate.Infrastructure.Models;
+﻿using ChessMate.Infrastructure.Entities;
 using ChessMate.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

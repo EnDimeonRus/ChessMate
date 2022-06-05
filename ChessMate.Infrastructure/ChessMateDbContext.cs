@@ -1,4 +1,4 @@
-﻿using ChessMate.Infrastructure.Models;
+﻿using ChessMate.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChessMate.Infrastructure

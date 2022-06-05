@@ -1,5 +1,5 @@
 ﻿using ChessMate.Application.Exceptions;
-using ChessMate.Infrastructure.Models;
+using ChessMate.Infrastructure.Entities;
 using ChessMate.Infrastructure.Repository;
 using System;
 using System.Linq;

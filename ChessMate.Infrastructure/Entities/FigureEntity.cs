@@ -1,4 +1,4 @@
-﻿namespace ChessMate.Infrastructure.Models
+﻿namespace ChessMate.Infrastructure.Entities
 {
     public class FigureEntity : BaseEntity
     {

@@ -1,8 +1,12 @@
-﻿namespace ChessMate.Application.Managers
+﻿using ChessMate.Models.Models;
+using System.Threading.Tasks;
+
+namespace ChessMate.Application.Managers
 {
     public interface IPositionManager
     {
-        void SetPosition(int figure, int color, string oldPosition, string newPosition);
+        Task SetPositionAsync(int figureId, int colorId, string oldPosition, string newPosition);
 
+        Position GetPosition(int figureId, int colorId);
     }
 }

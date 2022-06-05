@@ -28,11 +28,11 @@ namespace ChessMate.UnitTest.Application.Managers
         [Fact]
         public void Should_Call_Validator_On_Parameters()
         {
-            _positionValidator.Setup(x => x.ValidatePosition(1, 1, "", ""));
+            _positionValidator.Setup(x => x.ValidatePositionAsync(1, 1, "", ""));
 
             _sut.SetPosition(1, 1, "", "");
 
-            _positionValidator.Verify(x => x.ValidatePosition(1, 1, "", ""), Times.Once);
+            _positionValidator.Verify(x => x.ValidatePositionAsync(1, 1, "", ""), Times.Once);
         }
     }
 }

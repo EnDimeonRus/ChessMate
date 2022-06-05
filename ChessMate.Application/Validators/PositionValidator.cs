@@ -3,6 +3,7 @@ using ChessMate.Infrastructure.Models;
 using ChessMate.Infrastructure.Repository;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ChessMate.Application.Validators
 {
@@ -24,16 +25,15 @@ namespace ChessMate.Application.Validators
             _colorRepository = colorRepository;
         }
 
-        public void ValidatePosition(int figureId, int colorId, string oldPosition, string newPosition)
+        public async Task ValidatePositionAsync(int figureId, int colorId, string oldPosition, string newPosition)
         {
-            ValidateFigure(figureId);
+            await ValidateFigure(figureId);
 
-            ValidateColor(colorId);
+            await ValidateColorAsync(colorId);
 
             ValidatePosition(oldPosition,nameof(oldPosition), ERROR_TEXT_OLD_POSITION);
 
             ValidatePosition(newPosition, nameof(newPosition), ERROR_TEXT_NEW_POSITION);
-
         }
 
         private void ValidatePosition(string position, string errorField, string errorMessage)
@@ -52,22 +52,20 @@ namespace ChessMate.Application.Validators
             {
                 throw new ValidationException(errorField, errorMessage);
             }
-
-
         }
 
-        private void ValidateColor(int colorId)
+        private async Task ValidateColorAsync(int colorId)
         {
-            var color = _colorRepository.Get(colorId);
+            var color = await _colorRepository.GetAsync(colorId);
             if (color == null)
             {
                 throw new ValidationException(nameof(colorId), ERRPR_TEXT_COLOR);
             }
         }
 
-        private void ValidateFigure(int figureId)
+        private async Task ValidateFigure(int figureId)
         {
-            var figure = _figureRepository.Get(figureId);
+            var figure = await  _figureRepository.GetAsync(figureId);
             if (figure == null)
             {
                 throw new ValidationException(nameof(figureId), ERROR_TEXT_FIGURE);

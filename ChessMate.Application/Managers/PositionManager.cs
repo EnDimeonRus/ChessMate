@@ -13,7 +13,7 @@ namespace ChessMate.Application.Managers
 
         public void SetPosition(int figure, int color, string oldPosition, string newPosition)
         {
-            _positionValidator.ValidatePosition(figure, color, oldPosition, newPosition);
+            _positionValidator.ValidatePositionAsync(figure, color, oldPosition, newPosition);
         }
     }
 }

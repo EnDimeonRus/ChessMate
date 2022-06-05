@@ -8,6 +8,6 @@ namespace ChessMate.Application.Validators
 {
     public interface IPositionValidator
     {
-        public void ValidatePosition(int figureId, int colorId, string oldPosition, string newPosition);
+        public Task ValidatePositionAsync(int figureId, int colorId, string oldPosition, string newPosition);
     }
 }

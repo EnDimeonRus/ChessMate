@@ -24,26 +24,24 @@ namespace ChessMate.UnitTest.Application.Validators
         public void Should_Throw_Exception_When_Figure_Is_Incorrect()
         {
             var figureId = 1;
-            _figureRepo.Setup(x => x.Get(figureId)).Returns(() => null);
-            _colorRepo.Setup(x => x.Get(2)).Returns(new ColorEntity());
+            _figureRepo.Setup(x => x.GetAsync(figureId)).ReturnsAsync(() => null);
+            _colorRepo.Setup(x => x.GetAsync(2)).ReturnsAsync(new ColorEntity());
 
-            var exception = ValidateFigure(figureId);
+            ValidateFigure(figureId);
 
-            Assert.Equal("figureId", exception.PropertyName);
-            Assert.Equal("Figure is incorrect", exception.Message);
+          
         }
 
         [Fact]
         public void Should_Throw_Exception_When_Color_Is_Incorrect()
         {
             int colorId = 2;
-            _figureRepo.Setup(x => x.Get(1)).Returns(new FigureEntity());
-            _colorRepo.Setup(x => x.Get(colorId)).Returns(() => null);
+            _figureRepo.Setup(x => x.GetAsync(1)).ReturnsAsync(new FigureEntity());
+            _colorRepo.Setup(x => x.GetAsync(colorId)).ReturnsAsync(() => null);
 
-            var exception = ValidateColor(colorId);
+           ValidateColor(colorId);
 
-            Assert.Equal("colorId", exception.PropertyName);
-            Assert.Equal("Color is incorrect", exception.Message);
+           
         }
 
         [Theory]
@@ -79,11 +77,11 @@ namespace ChessMate.UnitTest.Application.Validators
         [InlineData("f1")]
         [InlineData("g1")]
         [InlineData("h1")]
-        public void Should_Not_Throw_Exception_When_Positions_Letter_Correct(string position)
+        public async void Should_Not_Throw_Exception_When_Positions_Letter_Correct(string position)
         {
             SetupCorrectFigureAndColor();
 
-            _sut.ValidatePosition(1, 2, position, position);
+            await _sut.ValidatePositionAsync(1, 2, position, position);
         }
 
         [Fact]
@@ -115,44 +113,50 @@ namespace ChessMate.UnitTest.Application.Validators
         {
             SetupCorrectFigureAndColor();
 
-            _sut.ValidatePosition(1, 2, position, position);
+            _sut.ValidatePositionAsync(1, 2, position, position);
         }
 
 
         #region Validate Calls
 
-        private ValidationException ValidateFigure(int figureId)
+        private async void ValidateFigure(int figureId)
         {
-            return Assert.Throws<ValidationException>(() =>
+            var exception = await Assert.ThrowsAsync<ValidationException>(async () =>
             {
-                _sut.ValidatePosition(figureId, 1, PROPER_POSITION, PROPER_POSITION);
+                await _sut.ValidatePositionAsync(figureId, 1, PROPER_POSITION, PROPER_POSITION);
             });
+
+            Assert.Equal("figureId", exception.PropertyName);
+            Assert.Equal("Figure is incorrect", exception.Message);
         }
 
-        private ValidationException ValidateColor(int colorId)
+        private async void ValidateColor(int colorId)
         {
-            return Assert.Throws<ValidationException>(() =>
+            var exception = await Assert.ThrowsAsync<ValidationException>(async () =>
             {
-                _sut.ValidatePosition(1, colorId, PROPER_POSITION, PROPER_POSITION);
+                await _sut.ValidatePositionAsync(1, colorId, PROPER_POSITION, PROPER_POSITION);
             });
+
+            Assert.Equal("colorId", exception.PropertyName);
+            Assert.Equal("Color is incorrect", exception.Message);
         }
 
-        private void ValidateOldPosition(string oldPosition)
+        private async void ValidateOldPosition(string oldPosition)
         {
-            var exception = Assert.Throws<ValidationException>(() =>
+            var exception = await  Assert.ThrowsAsync<ValidationException>(async () =>
             {
-                _sut.ValidatePosition(1, 2, oldPosition, PROPER_POSITION);
+                await _sut.ValidatePositionAsync(1, 2, oldPosition, PROPER_POSITION);
             });
 
             Assert.Equal("oldPosition", exception.PropertyName);
             Assert.Equal("Old Position is incorrect", exception.Message);
         }
 
-        private void ValidateNewPosition(string newPosition)
+        private async void ValidateNewPosition(string newPosition)
         {
-            var exception = Assert.Throws<ValidationException>(() =>
+            var exception =await  Assert.ThrowsAsync<ValidationException>(async () =>
             {
-                _sut.ValidatePosition(1, 2, PROPER_POSITION, newPosition);
+                await _sut.ValidatePositionAsync(1, 2, PROPER_POSITION, newPosition);
             });
 
             Assert.Equal("newPosition", exception.PropertyName);
@@ -162,8 +166,8 @@ namespace ChessMate.UnitTest.Application.Validators
 
         private void SetupCorrectFigureAndColor()
         {
-            _figureRepo.Setup(x => x.Get(1)).Returns(new FigureEntity());
-            _colorRepo.Setup(x => x.Get(2)).Returns(new ColorEntity());
+            _figureRepo.Setup(x => x.GetAsync(1)).ReturnsAsync(new FigureEntity());
+            _colorRepo.Setup(x => x.GetAsync(2)).ReturnsAsync(new ColorEntity());
         }
     }
 }

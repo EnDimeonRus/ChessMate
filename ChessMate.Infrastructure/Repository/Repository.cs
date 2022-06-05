@@ -1,29 +1,28 @@
 ﻿using ChessMate.Infrastructure.Models;
 using System;
-
+using System.Threading.Tasks;
 
 namespace ChessMate.Infrastructure.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        public int Create(TEntity entity)
+        //TODO Add Exception Handliong
+        ChessMateDbContext _ctx;
+        public Repository(ChessMateDbContext ctx)
         {
-            throw new NotImplementedException();
+            _ctx = ctx;
         }
 
-        public void Delete(int id)
+        public async Task<int> CreateAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            var createdEntity = _ctx.Add(entity);
+            await _ctx.SaveChangesAsync();
+            return createdEntity.Entity.ID;
         }
 
-        public TEntity Get(int id)
+        public async Task<TEntity> GetAsync(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Update(TEntity entity)
-        {
-            throw new NotImplementedException();
+            return _ctx.Find<TEntity>(id);
         }
     }
 }

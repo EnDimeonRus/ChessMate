@@ -1,3 +1,4 @@
+using ChessMate.Application.Extensions;
 using ChessMate.Infrastructure;
 using ChessMate.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -30,10 +31,13 @@ namespace ChessMate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             var connString = Configuration["ConnectionStrings:Main"];
 
             services.InitializeDatabase(connString);
+
+            services.RegisterManagers();
+
+            services.RegisterValidators();
 
             services.AddControllers();
 
@@ -46,6 +50,11 @@ namespace ChessMate
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<ChessMateDbContext>();
+                context.Database.EnsureCreated();
+            }
 
             if (env.IsDevelopment())
             {
@@ -53,7 +62,6 @@ namespace ChessMate
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ChessMate v1"));
             }
-
 
             app.UseHttpsRedirection();
 

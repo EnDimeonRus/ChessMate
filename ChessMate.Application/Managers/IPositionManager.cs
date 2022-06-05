@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessMate.Application
+namespace ChessMate.Application.Managers
 {
     public interface IPositionManager
     {

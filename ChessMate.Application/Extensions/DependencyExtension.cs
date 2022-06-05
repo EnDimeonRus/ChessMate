@@ -1,9 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ChessMate.Application.Managers;
+using ChessMate.Application.Validators;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ChessMate.Application.Extensions
 {
@@ -12,6 +9,11 @@ namespace ChessMate.Application.Extensions
         public static void RegisterManagers(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IPositionManager, PositionManager>();
+        }
+
+        public static void RegisterValidators(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddTransient<IPositionValidator, PositionValidator>();
         }
     }
 }

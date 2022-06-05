@@ -35,6 +35,8 @@ namespace ChessMate
 
             services.InitializeDatabase(connString);
 
+            services.InitializeRepositories();
+
             services.RegisterManagers();
 
             services.RegisterValidators();

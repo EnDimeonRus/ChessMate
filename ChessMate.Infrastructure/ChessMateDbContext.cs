@@ -10,6 +10,7 @@ namespace ChessMate.Infrastructure
         public virtual DbSet<PositionEntity> Positions { get; set; }
 
 
+
         public ChessMateDbContext(DbContextOptions<ChessMateDbContext> options) : base(options)
         {
         }
@@ -23,25 +24,41 @@ namespace ChessMate.Infrastructure
 
             modelBuilder.Entity<ColorEntity>().Property(x => x.ID)
                 .IsRequired();
-            modelBuilder.Entity<ColorEntity>()
-                .Property(x => x.Description)
+            modelBuilder.Entity<ColorEntity>().Property(x => x.Description)
                 .IsRequired()
                 .HasMaxLength(255);
 
-            modelBuilder.Entity<FigureEntity>()
-                .Property(x=>x.Description)
+            modelBuilder.Entity<FigureEntity>().Property(x => x.ID)
+                .IsRequired();
+            modelBuilder.Entity<FigureEntity>().Property(x => x.Description)
                 .IsRequired()
                 .HasMaxLength(255);
-
-            modelBuilder.Entity<FigureEntity>()
-                .Property(x => x.Code)
+            modelBuilder.Entity<FigureEntity>().Property(x => x.Code)
                 .IsRequired()
                 .HasMaxLength(10);
 
+
+            modelBuilder.Entity<PositionEntity>()
+                .HasOne(x => x.Color)
+                .WithMany()
+                .IsRequired();
+            modelBuilder.Entity<PositionEntity>()
+                .HasOne(x => x.Figure)
+                .WithMany()
+                .IsRequired();
+            modelBuilder.Entity<PositionEntity>().Property(x => x.ID)
+                .IsRequired();
+            modelBuilder.Entity<PositionEntity>().Property(x => x.PreviousPosition)
+                .IsRequired()
+                .HasMaxLength(2);
+            modelBuilder.Entity<PositionEntity>().Property(x => x.CurrentPosition)
+                .IsRequired()
+                .HasMaxLength(2);
+
             modelBuilder.Entity<ColorEntity>()
                 .HasData(
-                new ColorEntity {ID = 1, Description = "Белый" },
-                new ColorEntity {ID = 2,  Description = "Черный" });
+                new ColorEntity { ID = 1, Description = "Белый" },
+                new ColorEntity { ID = 2, Description = "Черный" });
 
             modelBuilder.Entity<FigureEntity>().HasData(
                 new FigureEntity() { ID = 1, Code = "п", Description = "Пешка" },

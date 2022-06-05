@@ -12,3 +12,5 @@ ChessMate/bin/
 ChessMate/obj/
 ChessMate/ChessMate.API.csproj.user
 ChessMate/ChessMate.API.csproj
+ChessMate.UnitTest/bin/
+ChessMate.UnitTest/obj/

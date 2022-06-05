@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ChessMate.Infrastructure.Models
+namespace ChessMate.Infrastructure.Entities
 {
     public class BaseEntity
     {

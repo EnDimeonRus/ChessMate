@@ -1,10 +1,14 @@
 ﻿using System;
 
-namespace ChessMate.Infrastructure.Models
+namespace ChessMate.Infrastructure.Entities
 {
     public class PositionEntity : BaseEntity
     {
+        public int FigureID { get; set; }
+
         public FigureEntity Figure { get; set; }
+
+        public int ColorID { get; set; }
 
         public ColorEntity Color { get; set; }
 

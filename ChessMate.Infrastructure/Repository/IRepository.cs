@@ -1,4 +1,5 @@
-﻿using ChessMate.Infrastructure.Models;
+﻿using ChessMate.Infrastructure.Entities;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ChessMate.Infrastructure.Repository
@@ -9,5 +10,6 @@ namespace ChessMate.Infrastructure.Repository
 
         Task<int> CreateAsync(TEntity entity);
 
+        IQueryable<TEntity> Table { get; }
     }
 }

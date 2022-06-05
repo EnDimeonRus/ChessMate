@@ -1,6 +1,6 @@
 ﻿using ChessMate.Application.Exceptions;
 using ChessMate.Application.Validators;
-using ChessMate.Infrastructure.Models;
+using ChessMate.Infrastructure.Entities;
 using ChessMate.Infrastructure.Repository;
 using Moq;
 using Xunit;

@@ -1,7 +1,7 @@
-﻿using ChessMate.Infrastructure.Entities;
-using ChessMate.Infrastructure.Repository;
+﻿using ChessMate.Application.Managers;
+using ChessMate.Models.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Threading.Tasks;
 
 namespace ChessMate.API.Controllers
@@ -10,18 +10,40 @@ namespace ChessMate.API.Controllers
     [ApiController]
     public class PositionsController : ControllerBase
     {
-        // GET api/<PositionsController>/5
-        [HttpGet("{id}")]
-        public async Task<string> Get(int id)
+
+        public IPositionManager _positionManager;
+
+        public PositionsController(IPositionManager positionManager)
         {
-            return "value";
+            _positionManager = positionManager;
         }
 
-        // POST api/<PositionsController>
+        /// <summary>
+        /// Store position for specific figure
+        /// </summary>
+        /// <param name="position">Information about figure and position</param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task Post([FromBody] string value)
+        [SwaggerOperation(OperationId = "saveFigurePosition")]
+        public async Task<IActionResult> Post([FromBody] Position position)
         {
+            await _positionManager.SetPositionAsync(1, 1, position.PreviousPosition, position.CurrentPosition);
+            return Ok();
         }
+
+        /// <summary>
+        /// Get current position for figure with specific color
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="figure"></param>
+        /// <returns></returns>
+        [HttpGet("{figure}/{color}")]
+        public Position Get(int color, int figure)
+        {
+            return  _positionManager.GetPosition(1, 1);
+        }
+
+        
 
 
     }

@@ -6,6 +6,8 @@
 
         public string Color { get; set; }
 
+        public string PreviousPosition { get; set; }
+
         public string CurrentPosition { get; set; }
     }
 }

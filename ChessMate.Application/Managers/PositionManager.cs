@@ -2,6 +2,7 @@
 using ChessMate.Infrastructure.Entities;
 using ChessMate.Infrastructure.Repository;
 using ChessMate.Models.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,15 +36,19 @@ namespace ChessMate.Application.Managers
         public Position GetPosition(int figureId, int colorId)
         {
             var positionEntity = _positionRepository.Table
-                .Where(x => x.FigureID == figureId && x.ColorID == colorId)
-                .OrderBy(x => x.InsertDate).FirstOrDefault(); ;
+                        .Include(x => x.Figure)
+                        .Include(x => x.Color)
+                        .Where(x => x.FigureID == figureId && x.ColorID == colorId)
+                        .OrderBy(x => x.InsertDate).FirstOrDefault();
+                                 
             if(positionEntity != null)
             {
                 return new Position()
                 {
                     Figure = positionEntity.Figure.Description,
                     Color = positionEntity.Color.Description,
-                    CurrentPosition = positionEntity.CurrentPosition
+                    CurrentPosition = positionEntity.CurrentPosition,
+                    PreviousPosition = positionEntity.PreviousPosition
                 };
             }
             return null;

@@ -13,7 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ChessMate
@@ -43,9 +45,17 @@ namespace ChessMate
 
             services.AddControllers();
 
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(swaggerOption =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ChessMate API", Version = "v1" });
+                swaggerOption.EnableAnnotations();
+
+                swaggerOption.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "ChessMate API", 
+                    Version = "v1",
+                    Description = "API was developed as solution for ECCO test excercise"});
+
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                swaggerOption.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
         }
 

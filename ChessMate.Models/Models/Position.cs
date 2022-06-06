@@ -2,9 +2,9 @@
 {
     public class Position
     {
-        public string Figure { get; set; }
+        public int Figure { get; set; }
 
-        public string Color { get; set; }
+        public int Color { get; set; }
 
         public string PreviousPosition { get; set; }
 

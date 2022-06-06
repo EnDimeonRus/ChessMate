@@ -3,20 +3,13 @@ using ChessMate.Infrastructure;
 using ChessMate.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace ChessMate
 {
@@ -45,6 +38,8 @@ namespace ChessMate
 
             services.AddControllers();
 
+            services.AddLogging();
+
             services.AddSwaggerGen(swaggerOption =>
             {
                 swaggerOption.EnableAnnotations();
@@ -57,6 +52,8 @@ namespace ChessMate
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 swaggerOption.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

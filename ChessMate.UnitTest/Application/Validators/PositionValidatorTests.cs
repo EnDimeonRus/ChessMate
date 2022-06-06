@@ -70,6 +70,7 @@ namespace ChessMate.UnitTest.Application.Validators
 
         [Theory]
         [InlineData("a1")]
+        [InlineData("A1")]
         [InlineData("b1")]
         [InlineData("c1")]
         [InlineData("d1")]
@@ -102,6 +103,7 @@ namespace ChessMate.UnitTest.Application.Validators
 
         [Theory]
         [InlineData("a1")]
+        [InlineData("A1")]
         [InlineData("b2")]
         [InlineData("c3")]
         [InlineData("d4")]

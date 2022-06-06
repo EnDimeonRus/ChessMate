@@ -43,12 +43,14 @@ namespace ChessMate.Application.Validators
                 throw new ValidationException(errorField, errorMessage);
             }
 
-            if (!_possibleLetters.Contains(position[0]))
+            var positionElements = position.ToLower().ToCharArray();
+
+            if (!_possibleLetters.Contains(positionElements[0]))
             {
                 throw new ValidationException(errorField, errorMessage);
             }
 
-            if (!_possibleDigits.Contains(position[1]))
+            if (!_possibleDigits.Contains(positionElements[1]))
             {
                 throw new ValidationException(errorField, errorMessage);
             }

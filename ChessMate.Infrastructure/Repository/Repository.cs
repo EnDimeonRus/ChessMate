@@ -1,5 +1,4 @@
 ﻿using ChessMate.Infrastructure.Entities;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,7 +24,7 @@ namespace ChessMate.Infrastructure.Repository
 
         public async Task<TEntity> GetAsync(int id)
         {
-            return _ctx.Find<TEntity>(id);
+            return await _ctx.FindAsync<TEntity>(id);
         }
     }
 }

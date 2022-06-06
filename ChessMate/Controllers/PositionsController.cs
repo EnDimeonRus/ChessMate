@@ -27,7 +27,7 @@ namespace ChessMate.API.Controllers
         [SwaggerOperation(OperationId = "saveFigurePosition")]
         public async Task<IActionResult> Post([FromBody] Position position)
         {
-            await _positionManager.SetPositionAsync(1, 1, position.PreviousPosition, position.CurrentPosition);
+            await _positionManager.SetPositionAsync(int.Parse(position.Figure), int.Parse(position.Color), position.PreviousPosition, position.CurrentPosition);
             return Ok();
         }
 
@@ -38,9 +38,9 @@ namespace ChessMate.API.Controllers
         /// <param name="figure"></param>
         /// <returns></returns>
         [HttpGet("{figure}/{color}")]
-        public Position Get(int color, int figure)
+        public Position Get(int figure, int color)
         {
-            return  _positionManager.GetPosition(1, 1);
+            return  _positionManager.GetPosition(figure, color);
         }
 
         

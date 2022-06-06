@@ -16,6 +16,7 @@ namespace ChessMate.Application.Validators
         private const string ERRPR_TEXT_COLOR = "Color is incorrect";
         private const string ERROR_TEXT_OLD_POSITION = "Old Position is incorrect";
         private const string ERROR_TEXT_NEW_POSITION = "New Position is incorrect";
+        private const string ERROR_TEXT_SAME_POSITION = "Positions can not be the same";
         char[] _possibleLetters = new[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g','h' };
         char[] _possibleDigits = new[] { '1', '2', '3', '4', '5', '6', '7', '8' };
 
@@ -34,6 +35,11 @@ namespace ChessMate.Application.Validators
             ValidatePosition(oldPosition,nameof(oldPosition), ERROR_TEXT_OLD_POSITION);
 
             ValidatePosition(newPosition, nameof(newPosition), ERROR_TEXT_NEW_POSITION);
+            
+            if(oldPosition == newPosition)
+            {
+                throw new ValidationException(nameof(newPosition), ERROR_TEXT_SAME_POSITION); 
+            }
         }
 
         private void ValidatePosition(string position, string errorField, string errorMessage)

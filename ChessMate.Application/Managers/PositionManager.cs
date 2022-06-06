@@ -39,9 +39,8 @@ namespace ChessMate.Application.Managers
                         .Include(x => x.Figure)
                         .Include(x => x.Color)
                         .Where(x => x.FigureID == figureId && x.ColorID == colorId)
-                        .OrderBy(x => x.InsertDate).FirstOrDefault();
-                                 
-            if(positionEntity != null)
+                        .OrderByDescending(x => x.InsertDate).FirstOrDefault();
+            if (positionEntity != null)
             {
                 return new Position()
                 {

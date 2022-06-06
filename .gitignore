@@ -11,8 +11,8 @@ ChessMate.Models/obj/
 ChessMate/bin/
 ChessMate/obj/
 ChessMate/ChessMate.API.csproj.user
-ChessMate/ChessMate.API.csproj
 ChessMate.UnitTest/bin/
 ChessMate.UnitTest/obj/
 .vs/ChessMate/v16/TestStore/0/000.testlog
 .vs/
+ChessMate/ChessMate.API.xml

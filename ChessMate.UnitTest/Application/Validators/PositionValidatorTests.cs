@@ -3,6 +3,7 @@ using ChessMate.Application.Validators;
 using ChessMate.Infrastructure.Entities;
 using ChessMate.Infrastructure.Repository;
 using Moq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ChessMate.UnitTest.Application.Validators
@@ -21,27 +22,23 @@ namespace ChessMate.UnitTest.Application.Validators
         }
 
         [Fact]
-        public void Should_Throw_Exception_When_Figure_Is_Incorrect()
+        public async Task Should_Throw_Exception_When_Figure_Is_Incorrect()
         {
             var figureId = 1;
             _figureRepo.Setup(x => x.GetAsync(figureId)).ReturnsAsync(() => null);
             _colorRepo.Setup(x => x.GetAsync(2)).ReturnsAsync(new ColorEntity());
 
-            ValidateFigure(figureId);
-
-          
+            await ValidateFigure(figureId);
         }
 
         [Fact]
-        public void Should_Throw_Exception_When_Color_Is_Incorrect()
+        public async Task Should_Throw_Exception_When_Color_Is_Incorrect()
         {
             int colorId = 2;
             _figureRepo.Setup(x => x.GetAsync(1)).ReturnsAsync(new FigureEntity());
             _colorRepo.Setup(x => x.GetAsync(colorId)).ReturnsAsync(() => null);
 
-           ValidateColor(colorId);
-
-           
+           await ValidateColor(colorId);
         }
 
         [Theory]
@@ -49,11 +46,11 @@ namespace ChessMate.UnitTest.Application.Validators
         [InlineData("   ")]
         [InlineData("alotofletters")]
         [InlineData("p4")]
-        public void Should_Throw_Exception_When_Old_Position_Letter_Is_Incorrect(string oldPosition)
+        public async Task  Should_Throw_Exception_When_Old_Position_Letter_Is_Incorrect(string oldPosition)
         {
             SetupCorrectFigureAndColor();
 
-            ValidateOldPosition(oldPosition);
+            await ValidateOldPosition(oldPosition);
         }
 
         [Theory]
@@ -61,11 +58,11 @@ namespace ChessMate.UnitTest.Application.Validators
         [InlineData("   ")]
         [InlineData("alotofletters")]
         [InlineData("p4")]
-        public void Should_Throw_Exception_When_New_Position_Letter_Is_Incorrect(string newPosition)
+        public async Task Should_Throw_Exception_When_New_Position_Letter_Is_Incorrect(string newPosition)
         {
             SetupCorrectFigureAndColor();
 
-            ValidateNewPosition(newPosition);
+            await ValidateNewPosition(newPosition);
         }
 
         [Theory]
@@ -78,27 +75,44 @@ namespace ChessMate.UnitTest.Application.Validators
         [InlineData("f1")]
         [InlineData("g1")]
         [InlineData("h1")]
-        public async void Should_Not_Throw_Exception_When_Positions_Letter_Correct(string position)
+        public async void Should_Not_Throw_Exception_When_New_Positions_Letter_Correct(string position)
         {
             SetupCorrectFigureAndColor();
 
-            await _sut.ValidatePositionAsync(1, 2, position, position);
+            await _sut.ValidatePositionAsync(1, 2, "b3", position);
+        }
+
+        [Theory]
+        [InlineData("a1")]
+        [InlineData("A1")]
+        [InlineData("b1")]
+        [InlineData("c1")]
+        [InlineData("d1")]
+        [InlineData("e1")]
+        [InlineData("f1")]
+        [InlineData("g1")]
+        [InlineData("h1")]
+        public async void Should_Not_Throw_Exception_When_Old_Positions_Letter_Correct(string position)
+        {
+            SetupCorrectFigureAndColor();
+
+            await _sut.ValidatePositionAsync(1, 2, position, "b3");
         }
 
         [Fact]
-        public void Should_Throw_Exception_When_Old_Position_Digit_Is_Incorrect()
+        public async Task Should_Throw_Exception_When_Old_Position_Digit_Is_Incorrect()
         {
             SetupCorrectFigureAndColor();
 
-            ValidateOldPosition("a0");
+            await ValidateOldPosition("a0");
         }
 
         [Fact]
-        public void Should_Throw_Exception_When_New_Position_Digit_Is_Incorrect()
+        public async Task Should_Throw_Exception_When_New_Position_Digit_Is_Incorrect()
         {
             SetupCorrectFigureAndColor();
 
-            ValidateNewPosition("a0");
+            await ValidateNewPosition("a0");
         }
 
         [Theory]
@@ -118,10 +132,22 @@ namespace ChessMate.UnitTest.Application.Validators
             _sut.ValidatePositionAsync(1, 2, position, position);
         }
 
+        [Fact]
+        public async Task Should_Throw_Exception_When_New_Position_Is_The_Same_As_Old_Position()
+        {
+            SetupCorrectFigureAndColor();
 
+            var exception = await Assert.ThrowsAsync<ValidationException>(async () =>
+            {
+                await _sut.ValidatePositionAsync(1, 2, "a1", "a1");
+            });
+
+            Assert.Equal("newPosition", exception.PropertyName);
+            Assert.Equal("Positions can not be the same", exception.Message);
+        }
         #region Validate Calls
 
-        private async void ValidateFigure(int figureId)
+        private async Task ValidateFigure(int figureId)
         {
             var exception = await Assert.ThrowsAsync<ValidationException>(async () =>
             {
@@ -132,7 +158,7 @@ namespace ChessMate.UnitTest.Application.Validators
             Assert.Equal("Figure is incorrect", exception.Message);
         }
 
-        private async void ValidateColor(int colorId)
+        private async Task ValidateColor(int colorId)
         {
             var exception = await Assert.ThrowsAsync<ValidationException>(async () =>
             {
@@ -143,7 +169,7 @@ namespace ChessMate.UnitTest.Application.Validators
             Assert.Equal("Color is incorrect", exception.Message);
         }
 
-        private async void ValidateOldPosition(string oldPosition)
+        private async Task ValidateOldPosition(string oldPosition)
         {
             var exception = await  Assert.ThrowsAsync<ValidationException>(async () =>
             {
@@ -154,7 +180,7 @@ namespace ChessMate.UnitTest.Application.Validators
             Assert.Equal("Old Position is incorrect", exception.Message);
         }
 
-        private async void ValidateNewPosition(string newPosition)
+        private async Task ValidateNewPosition(string newPosition)
         {
             var exception =await  Assert.ThrowsAsync<ValidationException>(async () =>
             {

@@ -32,13 +32,18 @@ namespace ChessMate.Application.Validators
 
             await ValidateColorAsync(colorId);
 
-            ValidatePosition(oldPosition,nameof(oldPosition), ERROR_TEXT_OLD_POSITION);
+            ValidatePosition(oldPosition, nameof(oldPosition), ERROR_TEXT_OLD_POSITION);
 
             ValidatePosition(newPosition, nameof(newPosition), ERROR_TEXT_NEW_POSITION);
-            
-            if(oldPosition == newPosition)
+
+            NewMethod(oldPosition, newPosition);
+        }
+
+        private static void NewMethod(string oldPosition, string newPosition)
+        {
+            if (oldPosition == newPosition)
             {
-                throw new ValidationException(nameof(newPosition), ERROR_TEXT_SAME_POSITION); 
+                throw new ValidationException(nameof(newPosition), ERROR_TEXT_SAME_POSITION);
             }
         }
 

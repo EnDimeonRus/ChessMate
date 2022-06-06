@@ -1,4 +1,4 @@
-﻿using ChessMate.Models.Models;
+﻿using ChessMate.Models.ViewModels;
 using System.Threading.Tasks;
 
 namespace ChessMate.Application.Managers
@@ -7,6 +7,6 @@ namespace ChessMate.Application.Managers
     {
         Task SetPositionAsync(int figureId, int colorId, string oldPosition, string newPosition);
 
-        Position GetPosition(int figureId, int colorId);
+        PositionViewModel GetPosition(int figureId, int colorId);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using ChessMate.Application.Validators;
 using ChessMate.Infrastructure.Entities;
 using ChessMate.Infrastructure.Repository;
-using ChessMate.Models.Models;
+using ChessMate.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +33,7 @@ namespace ChessMate.Application.Managers
             await _positionRepository.CreateAsync(entity);
         }
 
-        public Position GetPosition(int figureId, int colorId)
+        public PositionViewModel GetPosition(int figureId, int colorId)
         {
             var positionEntity = _positionRepository.Table
                         .Include(x => x.Figure)
@@ -42,7 +42,7 @@ namespace ChessMate.Application.Managers
                         .OrderByDescending(x => x.InsertDate).FirstOrDefault();
             if (positionEntity != null)
             {
-                return new Position()
+                return new PositionViewModel()
                 {
                     Figure = positionEntity.Figure.Description,
                     Color = positionEntity.Color.Description,

@@ -6,7 +6,6 @@ namespace ChessMate.Infrastructure.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        //TODO Add Exception Handliong
         ChessMateDbContext _ctx;
         public Repository(ChessMateDbContext ctx)
         {
